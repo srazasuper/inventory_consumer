@@ -20,16 +20,16 @@ setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url = 'https://github.com/srazasuper/inventory_consumer',
-    py_modules = ['main', 'app'],
+#    py_modules = ['src'],
     packages = find_packages(),
     install_requires = [requirements],
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     classifiers=[
         "Programming Language :: Python :: 3.9",
         "Operating System :: OS Independent",
     ],
     entry_points = '''
         [console_scripts]
-        invdb = main:cli
+        invdb = src.app:cli
     '''
 )
