@@ -15,7 +15,7 @@ logger = logging.getLogger()
     "--limit", "--l",
     type=click.INT,
     default=10,
-    help="Limit to top-k results")
+    help="Limit to top-k results defaults to 10")
 @click.option(
     "--groups", "--g",
     default="",
@@ -26,14 +26,6 @@ logger = logging.getLogger()
     type=click.Choice(["total_cpus", "total_memory", "total_disk"]),
     help="How to sort the result CPU, MEMORY, DISK, defaults to CPU")
 def cli(operation, limit, groups: list, sort):
-    """
-
-    :param operation: What Operation we want to perform, its a choice
-    :param limit: do you want to limit the output
-    :param groups: comma separated list of group names
-    :param sort: Sort order CPU, Memory or Disk
-    :return: since its entry point, it depends upon operation type.
-    """
     try:
         logger.info('trying operation... '+str(operation))
         if operation == 'group-overlap':
@@ -43,7 +35,8 @@ def cli(operation, limit, groups: list, sort):
                 node_list = group_nodes(nodes)
                 list_nodes.append(node_list)
             duplicates = find_dup(list_nodes)
-            click.echo('List of duplicate nodes  '+ str(duplicates)) #Needs Improvement as it should be a list
+            logger.info('List of overlapping nodes  '+ str(duplicates))#Needs Improvement as it should be a list
+            return duplicates
         elif operation == 'group-resources':
             output = {}
             groups = get_group()
@@ -73,9 +66,9 @@ def cli(operation, limit, groups: list, sort):
                                 'total_cpus': cpus,
                                 'total_disk': disk_in_bytes
                             }
-
         sorted_x = sort_stats(output, sort, limit)
         logger.info("This is List of group-resource " + 'sorted by ' + sort + str(' ')+ str(sorted_x))
+        return sorted_x
     except Exception as error:
         logger.info('operation of '+str(operation)+str(' Not successful'))
         raise error
