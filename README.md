@@ -20,7 +20,8 @@ pip install virtualenv
 
 virtualenv venv
 source venv/bin/activate
-python setup.py develop 
+python setup.py install 
+python setup.py develop (if you want to work and extend.)
 ```
 
 ## How to use.

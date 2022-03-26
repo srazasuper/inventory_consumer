@@ -27,7 +27,6 @@ logger = logging.getLogger()
     help="How to sort the result CPU, MEMORY, DISK, defaults to CPU")
 def cli(operation, limit, groups: list, sort):
     try:
-        logger.info('trying operation... '+str(operation))
         if operation == 'group-overlap':
             groups = str_to_list(groups)
             list_nodes = []
