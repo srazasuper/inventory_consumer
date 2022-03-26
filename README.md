@@ -1,4 +1,4 @@
-# Name
+# invdb
 Inventory API Consumer CLI.
  
 ## Audience.
