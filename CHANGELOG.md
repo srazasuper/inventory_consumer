@@ -1,3 +1,5 @@
+## [1.0.1](https://github.com/srazasuper/inventory_consumer/compare/1.0.0...1.0.1) (2022-03-26)
+
 # 1.0.0 (2022-03-26)
 
 
