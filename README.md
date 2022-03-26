@@ -7,6 +7,7 @@ consumers of Inventory data API.
 ## Description.
 This tool consumes Inventory API and display results.
 
+
 ## How to Install.
 
 - Clone this repo
@@ -25,8 +26,14 @@ python setup.py develop (if you want to work and extend.)
 ```
 
 ## How to use.
+- By default the tool will try to connect http://127.0.0.1:8080 .
 
 ```
+If inventory API URL is other than default 'http://127.0.0.1:8080' Than.
+
+# export inventory_api_fqdn ="<INVENTORY_API_FQDN>"
+
+
 invdb group-resources --help
 Usage: invdb [OPTIONS] {group-resources|group-overlap}
 
