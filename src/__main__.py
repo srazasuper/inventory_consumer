@@ -14,17 +14,24 @@ logger = logging.getLogger()
 @click.option(
     "--limit", "--l",
     type=click.INT,
+    default=10,
     help="Limit to top-k results")
 @click.option(
     "--groups", "--g",
     default="",
     help="comma separated values of N number of groups")
-def cli(operation, limit, groups: list):
+@click.option(
+    "--sort", "--s",
+    default="total_cpus",
+    type=click.Choice(["total_cpus", "total_memory", "total_disk"]),
+    help="How to sort the result CPU, MEMORY, DISK, defaults to CPU")
+def cli(operation, limit, groups: list, sort):
     """
 
     :param operation: What Operation we want to perform, its a choice
     :param limit: do you want to limit the output
     :param groups: comma separated list of group names
+    :param sort: Sort order CPU, Memory or Disk
     :return: since its entry point, it depends upon operation type.
     """
     try:
@@ -38,8 +45,37 @@ def cli(operation, limit, groups: list):
             duplicates = find_dup(list_nodes)
             click.echo('List of duplicate nodes  '+ str(duplicates)) #Needs Improvement as it should be a list
         elif operation == 'group-resources':
-            logger.info("group-resource-skjbxcskwks")
+            output = {}
+            groups = get_group()
+            for nodes in groups:
+                node_list = group_nodes(nodes)
+                for node in node_list:
+                    stats = get_hostdata(node)
+                    memory = stats.get('memtotal_mb')
+                    cpus = stats.get('processor_vcpus')
+                    disk_in_bytes = 0
+                    available_disks = stats.get('devices')
+                    for key, value in available_disks.items():
+                        size_in_bytes = int(available_disks.get(key).get('sectors')) * int(available_disks.get(key).get('sectorsize'))
+                        disk_in_bytes = disk_in_bytes + size_in_bytes
+                        if nodes in output:
+                            new_memory = output.get(nodes).get('total_memory') + memory
+                            new_cpus = output.get(nodes).get('total_cpus') + cpus
+                            new_disk = output.get(nodes).get('total_disk') + disk_in_bytes
+                            output[nodes] = {
+                                'total_memory': new_memory,
+                                'total_cpus': new_cpus,
+                                'total_disk': new_disk
+                            }
+                        else:
+                            output[nodes] = {
+                                'total_memory': memory,
+                                'total_cpus': cpus,
+                                'total_disk': disk_in_bytes
+                            }
 
+        sorted_x = sort_stats(output, sort, limit)
+        logger.info("This is List of group-resource " + 'sorted by ' + sort + str(' ')+ str(sorted_x))
     except Exception as error:
         logger.info('operation of '+str(operation)+str(' Not successful'))
         raise error

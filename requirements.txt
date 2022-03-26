@@ -2,4 +2,6 @@ click
 Requests
 setuptools
 mock
+pytest-mock
+
 
