@@ -1,4 +1,4 @@
-#Question:
+Question:
 ```
 1. Write a CLI that consumes the API and is able to do the following:
   - Shows the total CPU, memory, and disk space of each group and allows us to limit to top-k results (invdb group-resources --limit 5)
@@ -10,7 +10,7 @@
   - What other uses are there for this type of API in large-scale infrastructure?
 ```
 
-#Answers.
+Answers.
 
 ```
  1. invdb CLI is written (See the README part of how to install)
