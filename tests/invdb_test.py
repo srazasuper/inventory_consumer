@@ -2,7 +2,6 @@ import mock
 import os
 import unittest
 from src.utilities import *
-#import mocker
 
 
 sample_list = ['a','b','c']
@@ -45,22 +44,6 @@ class UtilityTests(unittest.TestCase):
         """
         lt = str_to_list('x,y,z')
         assert type(lt) is list
-
-#    def test_group_nodes(mocker, sample_list):
-        """
-        Test if we provide a list of group so it can find nodes from it.
-        :return: TRUE if matches with the response.
-        """
-#        fake_resp = mocker.Mock()
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

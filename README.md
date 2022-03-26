@@ -57,3 +57,7 @@ To find N number groups which have nodes across them.
 
 ```
 
+### Important docs.
+- [Link to Challenger Answers file](./challenge_answer.md)
+- [Link to Unit Tests](./tests)
+
